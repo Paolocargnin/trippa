@@ -10,7 +10,28 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//Social Login
+Route::get('/login/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuth',
+    'as'   => 'auth.getSocialAuth'
+]);
+
+
+Route::get('/login/callback/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuthCallback',
+    'as'   => 'auth.getSocialAuthCallback'
+]);
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');

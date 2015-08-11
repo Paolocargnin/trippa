@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+
+use Laravel\Socialite\Contracts\Factory as Socialite; 
 class AuthController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -28,9 +31,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Socialite $socialite)
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+        $this->socialite = $socialite;
     }
 
     /**
@@ -62,4 +66,31 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    //Social Login
+    public function getSocialAuth($provider=null)
+   {
+       if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
+
+       return $this->socialite->with($provider)->redirect();
+   }
+
+
+   public function getSocialAuthCallback($provider=null)
+   {
+
+    if($user = $this->socialite->with($provider)->user()){
+        User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'provider' => $provider,
+            'provider_id' => $user->user['id'],
+            'gender' => $user->user['gender'],
+            'password' => bcrypt('theBigBug'),
+        ]);
+    }else{
+        return 'something went wrong';
+    }
+   }
 }
