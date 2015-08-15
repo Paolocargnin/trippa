@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Bestmomo\Scafold\ScafoldServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
 
         /*
          * Application Service Providers...
