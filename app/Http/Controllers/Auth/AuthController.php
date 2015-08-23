@@ -89,6 +89,8 @@ class AuthController extends Controller
             'gender' => $user->user['gender'],
             'password' => bcrypt('theBigBug'),
         ]);
+
+        //todo restituisci messaggio di evvenuta registrazione
     }else{
         return 'something went wrong';
     }

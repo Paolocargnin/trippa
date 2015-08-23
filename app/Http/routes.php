@@ -14,6 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('events','EventsController');
+Route::resource('meta','MetaController');
 
 //Social Login
 Route::get('/login/{provider?}',[
@@ -35,3 +37,5 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+

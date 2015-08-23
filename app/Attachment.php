@@ -3,12 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait;
 
-class Event extends Model implements StaplerableInterface
+class Attachment extends Model
 {
-	// use Authenticatable;
+
 	use EloquentTrait;
 
   /**
@@ -16,17 +14,17 @@ class Event extends Model implements StaplerableInterface
    *
    * @var string
    */
-  protected $table = 'events';
+  protected $table = 'attachments';
 
   /**
    * The attributes that are mass assignable.
    *
    * @var array
    */
-  protected $fillable = ['name','founder_id', 'title', 'cover'];
+  protected $fillable = ['text','meta_id', 'title', 'attachment'];
 
   public function __construct(array $attributes = array()) {
-	  $this->hasAttachedFile('cover', [
+	  $this->hasAttachedFile('attachment', [
 	      'styles' => [
 	        'large' => 'x1080',
 	        'medium' => '300x300',
@@ -38,17 +36,9 @@ class Event extends Model implements StaplerableInterface
 	  parent::__construct($attributes);
 	}
 
-  /**
-   * Get the post that owns the comment.
-   */
-  public function founder()
-  {
-      return $this->belongsTo('App\User','founder_id');
-  }
 
   public function meta()
   {
-      return $this->hasMany('App\Meta');
+      return $this->belongsTo('App\Meta');
   }
-
 }

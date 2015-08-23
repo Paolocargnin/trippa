@@ -7,10 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Event;
-use Response;
-
-class EventsController extends Controller
+class AttachmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,7 +37,7 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-        $event = Event::create($request->all());
+        //
     }
 
     /**
@@ -51,7 +48,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        return Response::json(Event::findOrFail($id));
+        //
     }
 
     /**

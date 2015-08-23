@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Meta;
 
-use App\Event;
 use Response;
-
-class EventsController extends Controller
+class MetaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,7 +39,18 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-        $event = Event::create($request->all());
+        $input = $request->all();
+
+        $meta = Meta::create($input);
+
+        //aggiungi immagini
+        $attachments = [];
+        foreach ($input->attachments as $att) {
+            $attachment = new Attachment($att);
+            array_push($attachments, $attachment);
+        }
+
+        $meta->attachments()->saveMany($attachments);
     }
 
     /**
@@ -51,7 +61,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        return Response::json(Event::findOrFail($id));
+        //
     }
 
     /**
